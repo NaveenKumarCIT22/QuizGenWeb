@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <link rel="stylesheet" href="Style/style.css">
+</head>
+<body>
+    <login>
+        <h1>Enter the details below</h1><br>
+        <form style="text-align: inherit;">
+            <label for="usrname">UserID:</label>
+            <input type="text" id="usrname" required><br><br>
+            <label for="mailid">MailID:</label>
+            <input type="email" id="mailid" required><br><br>
+            <label for="qzid">QuizID:</label>
+            <input type="text" id="qzid" required><br><br>
+            <button type="submit" id="submit">Start Quiz</button>
+        </form>
+    </login>
+    <nav>
+        <div class="menu">
+          <div class="logo">
+            <a href="#">Quiz Gen Web</a>
+          </div>
+          <ul>
+            <li><a href="Sources/dashboard.html">Dashboard</a></li>
+            <li><a href="Sources/create.html">Create</a></li>
+            <li><a href="Sources/about.html">About</a></li>
+          </ul>
+        </div>
+    </nav>
+    <div class="img"></div>
+    <quiz class="hide">
+        <div class="start-screen">
+            <button id="start-button">START</button>
+            <!-- <div id="start-button" class="triangle-up">hkello</div> -->
+        </div>
+        <div id="display-container">
+            <div class="header">
+                <div class="number-of-count">
+                    <span class="number-of-question">1 of 3 questions</span>
+                </div>
+                <div id="xp-score">0</div>
+                <div class="timer-div">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/time-and-date/stopwatch-icon.png"
+                        width="20px" alt=""/>
+                    <span class="time-left">10s</span>
+                </div>
+            </div>
+            <div id="container">
+                <!-- questions and options will be displayed here -->
+            </div>
+            <button id="next-button">Next</button>
+        </div>
+        <div class="score-container hide">
+                <div id="user-score">Demo Score</div>
+                <button id="restart">Restart</button>
+        </div>
+    </quiz>
+    <!-- <scores style="visibility: hidden;">
+        <h1 class="srcs"></h1>
+        <p>See you soon <span id="prsn"></span></p>
+    </scores> -->
+    <script src="Script/main.js"></script>
+</body>
+</html>
