@@ -1,0 +1,44 @@
+.profile{grid-area:prfl}
+.performance{grid-area:prfrmnc}
+.attempted{grid-area:attmptd}
+.created{grid-area:crtd}
+.footer{grid-area:ftr}
+
+.grid-container {
+    display: grid;
+    margin:auto;
+    grid-template-areas:
+      'prfl prfl prfrmnc prfrmnc prfrmnc prfrmnc'
+      'prfl prfl prfrmnc prfrmnc prfrmnc prfrmnc'
+      'attmptd attmptd attmptd crtd crtd crtd'
+      'attmptd attmptd attmptd crtd crtd crtd'
+      'ftr ftr ftr ftr ftr ftr';
+    gap: 10px;
+    background-color:  rgba(255, 255, 255,0.4);
+    padding: 10px;
+  }
+
+.grid-container > div {
+    background-color: rgba(255, 255, 255,0.8);
+    text-align: center;
+    border-radius: 10px;
+    padding: 20px 0;
+    font-size: 30px;
+    min-width: 350px;
+    min-height: 200px;
+  }
+.profile{
+    display: flex;
+    /* flex-direction: row; */
+    justify-content: center;
+}
+.primg{
+    border-radius:50%;
+    float: left;
+    min-width: 50px;
+    padding: 5px;
+    background-color: aqua;
+}
+.rght{
+    /* float: right; */
+}
