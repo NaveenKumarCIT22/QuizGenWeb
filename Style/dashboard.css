@@ -4,6 +4,11 @@
 .created{grid-area:crtd}
 .footer{grid-area:ftr}
 
+.dshbrd{
+  width:auto;
+  height: auto;
+}
+
 .grid-container {
     display: grid;
     margin:auto;
@@ -12,7 +17,7 @@
       'prfl prfl prfrmnc prfrmnc prfrmnc prfrmnc'
       'attmptd attmptd attmptd crtd crtd crtd'
       'attmptd attmptd attmptd crtd crtd crtd'
-      'ftr ftr ftr ftr ftr ftr';
+      'attmptd attmptd attmptd crtd crtd crtd';
     gap: 10px;
     background-color:  rgba(255, 255, 255,0.4);
     padding: 10px;
@@ -30,15 +35,26 @@
 .profile{
     display: flex;
     /* flex-direction: row; */
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
 }
 .primg{
     border-radius:50%;
-    float: left;
-    min-width: 50px;
+    /* float: left; */
+    min-width: 70px;
     padding: 5px;
     background-color: aqua;
 }
-.rght{
-    /* float: right; */
+.hding{
+    font-size: 0.7em;
+}
+table{
+  width:100%;
+  font-size: 0.6em;
+  margin-top: 10px;
+}
+table tr td{
+  padding-top: 5px;
+  /* row-gap: 5px;
+  column-gap: 7px; */
 }

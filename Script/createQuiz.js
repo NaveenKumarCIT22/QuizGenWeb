@@ -77,7 +77,7 @@ nxt.addEventListener("click", ()=>{
     arr.push({
         question: qn.value,
         options: a,
-        correctoption: qCrtAns.value
+        correct: qCrtAns.value
     })
     qn.value=""
     qCrtAns.value=""
@@ -92,7 +92,15 @@ nxt.addEventListener("click", ()=>{
 sbmt.addEventListener("click", ()=>{
     console.log(arr)
     // async function(){
-    dscrdQnBkp(arr)
-    // }
-    console.log("Posted qn backup in discord")
+    // dscrdQnBkp(arr)
+    // // }
+    // console.log("Posted qn backup in discord")
+    var qzlst;
+    if(localStorage.getItem("qzlst")==null){
+        qzlst = []
+    } else {
+        qzlst = JSON.parse(localStorage.getItem("qzlst"))
+    }
+    qzlst.push(arr)
+    localStorage.setItem("qzlst",JSON.stringify(qzlst))
 })

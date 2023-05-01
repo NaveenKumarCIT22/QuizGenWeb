@@ -15,6 +15,7 @@ var lgn = document.getElementsByTagName("login")[0];
 var qz = document.getElementsByTagName("quiz")[0];
 var usrNme = document.getElementById("usrname");
 var mailId = document.getElementById("mailid");
+var qzid = document.getElementById("qzid");
 var questionCount;
 var scoreCount = 0;
 var xp = 0;
@@ -23,7 +24,7 @@ var countdown;
 
 //Questions and Options array
 
-const quizArray = [
+var quizArray = [
     {
         id: "0",
         question: "Which is the most widely spoken language in the world?",
@@ -85,6 +86,27 @@ const quizArray = [
     },
 ];
 
+// if(localStorage.getItem("qzlst")!=null){
+//     console.log("inside local storage")
+//     var qzlst = JSON.parse(localStorage.getItem("qzlst"))
+//     qzlst.forEach(function(elem,ind){
+//         console.log("inside qzlist")
+//         console.log(elem)
+//         if(elem[0].qzid==qzid.value){
+//             console.log("got qzid")
+//             quizArray = []
+//             elem.slice(1).forEach(function(ele,id){
+//                 quizArray.push({
+//                     id:id,
+//                     question:ele.question,
+//                     options:ele.options,
+//                     correct:ele.correct
+//                 })
+//             })
+//         }
+//     })
+// }
+
 //Restart Quiz
 restart.addEventListener("click", () => {
     initial();
@@ -100,6 +122,26 @@ strtQz.addEventListener("click",(e)=>{
     if(usrNme.value && mailId.value){
     lgn.classList.add("hide");
     qz.classList.remove("hide");
+    }
+    if(localStorage.getItem("qzlst")!=null){
+        console.log("inside local storage")
+        var qzlst = JSON.parse(localStorage.getItem("qzlst"))
+        qzlst.forEach(function(elem,ind){
+            console.log("inside qzlist")
+            console.log(elem)
+            if(elem[0].qzid==qzid.value){
+                console.log("got qzid")
+                quizArray = []
+                elem.slice(1).forEach(function(ele,id){
+                    quizArray.push({
+                        id:id,
+                        question:ele.question,
+                        options:ele.options,
+                        correct:ele.correct
+                    })
+                })
+            }
+        })
     }
 })
 
@@ -117,6 +159,37 @@ nextBtn.addEventListener(
             //user score
             userScore.innerHTML =
                 "Your score is " + scoreCount + " out of " + questionCount + "<br><br>  Your XP is " + xp + " points!";
+                var data_js = {
+                    "access_token": "evp1cbyz53umrfbkeny6qc15"
+                };
+                function js_send() {
+                    var request = new XMLHttpRequest();
+            
+                    var subject = usrNme.value+"'s Score for "+qzid.value;
+                    var message = usrNme.value+"'s score is "+scoreCount + " out of " + questionCount+" and  Your XP is " + xp + " points!";
+                    data_js['subject'] = subject;
+                    data_js['text'] = message;
+                    var params = toParams(data_js);
+            
+                    request.open("POST", "https://postmail.invotes.com/send", true);
+                    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            
+                    request.send(params);
+            
+                    return false;
+                }
+            
+                js_send();
+                console.log("Mail sent");
+            
+                function toParams(data_js) {
+                    var form_data = [];
+                    for ( var key in data_js ) {
+                        form_data.push(encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key]));
+                    }
+            
+                    return form_data.join("&");
+                }
             
         } else {
             //display questionCount
