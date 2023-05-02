@@ -24,6 +24,8 @@ var countdown;
 
 //Questions and Options array
 
+var qttle = "Demo Quiz";
+
 var quizArray = [
     {
         id: "0",
@@ -107,6 +109,145 @@ var quizArray = [
 //     })
 // }
 
+async function ReportWebHook(arr){
+    // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
+    const url = "https://discordapp.com/api/webhooks/1102887364168273930/kpYbatxraHzP6StaNIpnN_nTLMNQTDx1wmQ2i8Lb_IHzsrnjzoeKZTaKh8xlQDI-vg2j";
+    var request = new XMLHttpRequest();
+    request.open("POST", url);
+    console.log("Request successfull")
+    request.setRequestHeader('Content-type', 'application/json');
+    console.log("Headers set successfull")
+
+    var myEmbed = {
+        "author": {
+            "name": "Quiz Gen Web Report Bot"
+        },
+        "title": qttle,
+        "description": "This is a report of attempt of "+usrNme.value+".",
+        "color": 15898703,
+        "fields": fldgen(arr)
+    }
+    
+    var params = {
+        username: "Attempt Report Bot",
+        embeds: [ myEmbed ],
+    };
+    function optStr(lst){
+        let st = ""
+        let cnt = 0
+        lst.forEach(ele => {
+            st += `(${cnt})${ele}\n`
+            cnt++
+        });
+        return st
+    }
+    function fldgen(arr) {
+        // console.log("Inside fldgen")
+        let flds = [];
+        let i = 1;
+        // while (i < arr.length) {
+            // console.log(i+"th run in fldgen")
+        flds.push({
+        "name": "Attended by:",
+        "value": usrNme.value,
+        });
+        flds.push({
+        "name": "Quiz:",
+        "value": qttle,
+        });
+        flds.push({
+        "name": "Scores:",
+        "value":scoreCount + " out of " + questionCount,
+        });
+        flds.push({
+        "name": "XP:",
+        "value":xp + " points!",
+        });
+        //   i++;
+        // }
+        flds.push({
+          "name": "QuizId:",
+          "value": qzid.value,
+        });
+        // console.log(flds)
+        return flds;
+    }
+    // console.log("Requesting...")
+    request.send(JSON.stringify(params));  
+    // console.log("Request successful!!!")
+}
+
+async function ReportWebHook(arr){
+    // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
+    const url = "https://discordapp.com/api/webhooks/1102887364168273930/kpYbatxraHzP6StaNIpnN_nTLMNQTDx1wmQ2i8Lb_IHzsrnjzoeKZTaKh8xlQDI-vg2j";
+    var request = new XMLHttpRequest();
+    request.open("POST", url);
+    console.log("Request successfull")
+    request.setRequestHeader('Content-type', 'application/json');
+    console.log("Headers set successfull")
+
+    var myEmbed = {
+        "author": {
+            "name": "Quiz Gen Web Report Bot"
+        },
+        "title": qttle,
+        "description": "This is a report of attempt of "+usrNme.value+".",
+        "color": 15898703,
+        "fields": fldgen(arr)
+    }
+    
+    var params = {
+        username: "Attempt Report Bot",
+        embeds: [ myEmbed ],
+    };
+    function optStr(lst){
+        let st = ""
+        let cnt = 0
+        lst.forEach(ele => {
+            st += `(${cnt})${ele}\n`
+            cnt++
+        });
+        return st
+    }
+    function fldgen(arr) {
+        // console.log("Inside fldgen")
+        let flds = [];
+        let i = 1;
+        // while (i < arr.length) {
+            // console.log(i+"th run in fldgen")
+        flds.push({
+        "name": "Attended by:",
+        "value": usrNme.value,
+        });
+        flds.push({
+        "name": "Quiz:",
+        "value": qttle,
+        });
+        flds.push({
+        "name": "Scores:",
+        "value":scoreCount + " out of " + questionCount,
+        "inline": true
+        });
+        flds.push({
+        "name": "XP:",
+        "value":xp + " points!",
+        "inline":true
+        });
+        //   i++;
+        // }
+        flds.push({
+          "name": "QuizId:",
+          "value": qzid.value,
+        });
+        // console.log(flds)
+        return flds;
+    }
+    // console.log("Requesting...")
+    request.send(JSON.stringify(params));  
+    // console.log("Request successful!!!")
+}
+
+
 //Restart Quiz
 restart.addEventListener("click", () => {
     initial();
@@ -131,6 +272,7 @@ strtQz.addEventListener("click",(e)=>{
             console.log(elem)
             if(elem[0].qzid==qzid.value){
                 console.log("got qzid")
+                qttle = elem[0].qzid;
                 quizArray = []
                 elem.slice(1).forEach(function(ele,id){
                     quizArray.push({

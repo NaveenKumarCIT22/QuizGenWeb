@@ -245,7 +245,8 @@ login input,label{
     opacity: 90%;
   }
 .img{
-  background-image: url("https://img.freepik.com/free-photo/abstract-glowing-tunnel_181624-16814.jpg?w=1380&t=st=1682401105~exp=1682401705~hmac=6c6d685992727ce6ebb757dbef3a4ac0cf6e641f2e5ffa4607e3b8e494d8f213");
+  /* background-image: url("https://img.freepik.com/free-photo/abstract-glowing-tunnel_181624-16814.jpg?w=1380&t=st=1682401105~exp=1682401705~hmac=6c6d685992727ce6ebb757dbef3a4ac0cf6e641f2e5ffa4607e3b8e494d8f213"); */
+  background-image: url("../Sources/bg.jpeg");
   opacity: 80%;
   background-size: cover;
   height: 100vh;
