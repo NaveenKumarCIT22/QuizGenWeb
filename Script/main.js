@@ -254,12 +254,12 @@ async function ReportWebHook(arr) {
         flds.push({
           name: "Response:",
           value: ele.ans,
-          inline: true
+          inline: true,
         });
         flds.push({
           name: "Answer:",
           value: ele.cans,
-          inline: true
+          inline: true,
         });
       });
     }
@@ -288,8 +288,10 @@ strtQz.addEventListener("click", (e) => {
   e.preventDefault();
   console.log(usrNme.value);
   if (usrNme.value && mailId.value) {
-    lgn.classList.add("hide");
-    qz.classList.remove("hide");
+    if (mailId.value.includes("@") && mailId.value.includes(".com")) {
+      lgn.classList.add("hide");
+      qz.classList.remove("hide");
+    }
   }
   if (localStorage.getItem("qzlst") != null) {
     console.log("inside local storage");
