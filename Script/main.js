@@ -16,6 +16,7 @@ var qz = document.getElementsByTagName("quiz")[0];
 var usrNme = document.getElementById("usrname");
 var mailId = document.getElementById("mailid");
 var qzid = document.getElementById("qzid");
+var erinfo = document.getElementById("erinfo");
 var questionCount;
 var scoreCount = 0;
 var xp = 0;
@@ -291,7 +292,11 @@ strtQz.addEventListener("click", (e) => {
     if (mailId.value.includes("@") && mailId.value.includes(".com")) {
       lgn.classList.add("hide");
       qz.classList.remove("hide");
+    } else {
+        erinfo.innerHTML = "Please enter valid email"
     }
+  } else {
+    erinfo.innerHTML = "Please enter all fields"
   }
   if (localStorage.getItem("qzlst") != null) {
     console.log("inside local storage");

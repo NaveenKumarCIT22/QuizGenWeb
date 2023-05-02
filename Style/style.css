@@ -269,3 +269,8 @@ quiz{
   padding:0;
   transform: rotate(90deg);
 }
+#erinfo{
+  color: red;
+  text-align: center;
+  padding-top: 10px;
+}
