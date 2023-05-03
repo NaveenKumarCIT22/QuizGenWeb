@@ -400,6 +400,7 @@ nextBtn.addEventListener(
           .send("service_etgtj9h", "template_ii1pe7q", {
             usr_name: usrNme.value,
             quiz_id: qzid.value,
+            mail_id:mailId.value,
             to_name: "QuizSummaries",
             qz_title: qttle,
             score: `${scoreCount+" out of "+questionCount}`,
