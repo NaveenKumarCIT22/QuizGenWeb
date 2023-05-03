@@ -1,3 +1,5 @@
+// import "https://smtpjs.com/v3/smtp.js";
+
 //References
 var timeLeft = document.querySelector(".time-left");
 var quizContainer = document.getElementById("container");
@@ -293,10 +295,10 @@ strtQz.addEventListener("click", (e) => {
       lgn.classList.add("hide");
       qz.classList.remove("hide");
     } else {
-        erinfo.innerHTML = "Please enter valid email"
+      erinfo.innerHTML = "Please enter valid email";
     }
   } else {
-    erinfo.innerHTML = "Please enter all fields"
+    erinfo.innerHTML = "Please enter all fields";
   }
   if (localStorage.getItem("qzlst") != null) {
     console.log("inside local storage");
@@ -343,52 +345,106 @@ nextBtn.addEventListener(
         "<br><br>  Your XP is " +
         xp +
         " points!";
-      var data_js = {
-        access_token: "evp1cbyz53umrfbkeny6qc15",
-      };
-      function js_send() {
-        var request = new XMLHttpRequest();
+      //   var data_js = {
+      //     access_token: "evp1cbyz53umrfbkeny6qc15",
+      //   };
+      //   function js_send() {
+      //     var request = new XMLHttpRequest();
 
-        var subject = usrNme.value + "'s Score for " + qzid.value;
-        var message =
-          usrNme.value +
-          "'s score is " +
-          scoreCount +
-          " out of " +
-          questionCount +
-          " and  Your XP is " +
-          xp +
-          " points!";
-        data_js["subject"] = subject;
-        data_js["text"] = message;
-        var params = toParams(data_js);
+      //     var subject = usrNme.value + "'s Score for " + qzid.value;
+      //     var message =
+      //       usrNme.value +
+      //       "'s score is " +
+      //       scoreCount +
+      //       " out of " +
+      //       questionCount +
+      //       " and  Your XP is " +
+      //       xp +
+      //       " points!";
+      //     data_js["subject"] = subject;
+      //     data_js["text"] = message;
+      //     var params = toParams(data_js);
 
-        request.open("POST", "https://postmail.invotes.com/send", true);
-        request.setRequestHeader(
-          "Content-type",
-          "application/x-www-form-urlencoded"
-        );
+      //     request.open("POST", "https://postmail.invotes.com/send", true);
+      //     request.setRequestHeader(
+      //       "Content-type",
+      //       "application/x-www-form-urlencoded"
+      //     );
 
-        request.send(params);
+      //     request.send(params);
 
-        return false;
+      //     return false;
+      //   }
+
+      //   js_send();
+      function sendEmail() {
+        // Email.send({
+        //   Host: "smtp.gmail.com",
+        //   Username: "mnkincit22@gmail.com",
+        //   Password: "wwdmrlqxqgdccibm",
+        //   To: "naveenkumarmstvl@gmail.com",
+        //   From: "quizgenweb@gmail.com",
+        //   Subject: usrNme.value + "'s Score for " + qzid.value,
+        //   Body: "Your score card is below.",
+        //   html: `<div style='background:goldenrod; text-align:center; color:white; text-shadow: 2px 2px 2px red'><h1>${usrNme.value}'s Score in ${qttle} Quiz</h1><h3>Score: ${scoreCount+" out of "+questionCount}</h3><h3>XP   : ${xp+" points!"}</h3></div>`
+        // })
+        //   .then(function (message) {
+        //     console.log("Mail has been sent successfully")
+        //   });
+        (function () {
+        //   emailjs.init("bcY6oWjHvUNx2Ab_M2Q5p"); //please encrypted user id for malicious attacks
+        emailjs.init("kMOxF-sDaID9-Mbo2");
+        })();
+        //set the parameter as per you template parameter[https://dashboard.emailjs.com/templates]
+        emailjs
+          .send("service_etgtj9h", "template_ii1pe7q", {
+            usr_name: usrNme.value,
+            quiz_id: qzid.value,
+            to_name: "QuizSummaries",
+            qz_title: qttle,
+            score: `${scoreCount+" out of "+questionCount}`,
+            xp: `${xp+" points!"}`,
+          })
+          .then(
+            function (response) {
+              console.log("SUCCESS!", response.status, response.text);
+            },
+            function (error) {
+              console.log("FAILED...", error);
+            }
+          );
+        // var templateParams = {
+        //   to_name: "xyz",
+        //   from_name: "abc",
+        //   message_html: "Please Find out the attached file",
+        // };
+
+        // emailjs
+        //   .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+        //   .then(
+        //     function (response) {
+        //       console.log("SUCCESS!", response.status, response.text);
+        //     },
+        //     function (error) {
+        //       console.log("FAILED...", error);
+        //     }
+        //   );
       }
-
-      js_send();
       console.log("Mail sent");
       ReportWebHook(hstr);
       ResultWebHook();
+      sendEmail();
 
-      function toParams(data_js) {
-        var form_data = [];
-        for (var key in data_js) {
-          form_data.push(
-            encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key])
-          );
-        }
+      //   function toParams(data_js) {
+      //     var form_data = [];
+      //     for (var key in data_js) {
+      //       form_data.push(
+      //         encodeURIComponent(key) + "=" + encodeURIComponent(data_js[key])
+      //       );
+      //     }
 
-        return form_data.join("&");
-      }
+      //     return form_data.join("&");
+      //   }
     } else {
       //display questionCount
       countOfQuestion.innerHTML =
