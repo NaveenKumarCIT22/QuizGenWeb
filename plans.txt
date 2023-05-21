@@ -1,0 +1,16 @@
+-- react / flask
+-- dashboard
+-- logins for staffs and students
+-- actual database
+-- tags for topics
+-- individual lagging areas
+-- topics good at
+-- overall position (like ranking)
+-- question database with tags of topics and difficulty
+-- random question paper generation according to inputs on how much percent of easy,medium,hard questions and weightage of different topics
+-- question generation based on manual selecting of questions
+-- random questions combined with manually selected compulsary questions
+-- report generation for student wise, quiz wise and subject wise
+-- mailing of reports
+-- quiz attempts on qr scan
+-- 

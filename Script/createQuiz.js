@@ -85,71 +85,84 @@ var arr = [];
 //   console.log(response);
 // }
 
-async function testSnd2(arr){
-    // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
-    const url = "https://discordapp.com/api/webhooks/1101120438010134598/TcXbqu8zJrpXWK_kAMMw5aRW8SrQ8SvU0xrznnYoWeFWY3NbIq0dLqKpOIOIIlihd2xy";
-    var request = new XMLHttpRequest();
-    request.open("POST", url);
-    console.log("Request successfull")
-    request.setRequestHeader('Content-type', 'application/json');
-    console.log("Headers set successfull")
+async function testSnd2(arr) {
+  // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
+  const url =
+    "https://discordapp.com/api/webhooks/1101120438010134598/TcXbqu8zJrpXWK_kAMMw5aRW8SrQ8SvU0xrznnYoWeFWY3NbIq0dLqKpOIOIIlihd2xy";
+  var request = new XMLHttpRequest();
+  request.open("POST", url);
+  console.log("Request successfull");
+  request.setRequestHeader("Content-type", "application/json");
+  console.log("Headers set successfull");
 
-    var myEmbed = {
-        "author": {
-            "name": "Quiz Gen Web Qn Backup Bot"
-        },
-        "title": arr[0].title,
-        "description": "This is a backup of the questions created.",
-        "color": 15258703,
-        "fields": fldgen(arr)
+  var myEmbed = {
+    author: {
+      name: "Quiz Gen Web Qn Backup Bot",
+    },
+    title: arr[0].title,
+    description: "This is a backup of the questions created.",
+    color: 15258703,
+    fields: fldgen(arr),
+  };
+
+  var params = {
+    username: "Qn Backup Bot",
+    embeds: [myEmbed],
+  };
+  function optStr(lst) {
+    let st = "";
+    let cnt = 0;
+    lst.forEach((ele) => {
+      st += `(${cnt})${ele}\n`;
+      cnt++;
+    });
+    return st;
+  }
+  function fldgen(arr) {
+    console.log("Inside fldgen");
+    let flds = [];
+    let i = 1;
+    while (i < arr.length) {
+      console.log(i + "th run in fldgen");
+      flds.push({
+        name: "Qn-" + i,
+        value: arr[i].question,
+      });
+      flds.push({
+        name: "Options:",
+        value: optStr(arr[i].options),
+      });
+      flds.push({
+        name: "Correct:",
+        value: arr[i].correct,
+      });
+      i++;
     }
-    
-    var params = {
-        username: "Qn Backup Bot",
-        embeds: [ myEmbed ],
-    };
-    function optStr(lst){
-        let st = ""
-        let cnt = 0
-        lst.forEach(ele => {
-            st += `(${cnt})${ele}\n`
-            cnt++
-        });
-        return st
-    }
-    function fldgen(arr) {
-        console.log("Inside fldgen")
-        let flds = [];
-        let i = 1;
-        while (i < arr.length) {
-            console.log(i+"th run in fldgen")
-          flds.push({
-            "name": "Qn-" + i,
-            "value": arr[i].question,
-          });
-          flds.push({
-            "name": "Options:",
-            "value": optStr(arr[i].options),
-          });
-          flds.push({
-            "name": "Correct:",
-            "value": arr[i].correct,
-          });
-          i++;
-        }
-        flds.push({
-          "name": "QuizId:",
-          "value": arr[0].qzid,
-        });
-        console.log(flds)
-        return flds;
-    }
-    console.log("Requesting...")
-    request.send(JSON.stringify(params));  
-    console.log("Request successful!!!")
+    flds.push({
+      name: "QuizId:",
+      value: arr[0].qzid,
+    });
+    console.log(flds);
+    return flds;
+  }
+  console.log("Requesting...");
+  request.send(JSON.stringify(params));
+  console.log("Request successful!!!");
 }
 
 nxt.addEventListener("click", () => {
+  if (
+    qTitle.value == "" ||
+    qzid.value == "" ||
+    qOthrAns1.value == "" ||
+    qOthrAns2.value == "" ||
+    qOthrAns3.value == "" ||
+    qCrtAns.value == "" ||
+    qn.value == ""
+  ) {
+    alert("You must fill all fields or click on Submit button !!!");
+    return;
+  }
   if (arr.length == 0) arr.push({ title: qTitle.value, qzid: qId.value });
   qTitle.disabled = true;
   qId.disabled = true;
@@ -178,13 +191,13 @@ sbmt.addEventListener("click", () => {
   // async function(){
   testSnd2(arr);
   // // }
-  console.log("Posted qn backup in discord")
+  console.log("Posted qn backup in discord");
   var qzlst;
-  if(localStorage.getItem("qzlst")==null){
-      qzlst = []
+  if (localStorage.getItem("qzlst") == null) {
+    qzlst = [];
   } else {
-      qzlst = JSON.parse(localStorage.getItem("qzlst"))
+    qzlst = JSON.parse(localStorage.getItem("qzlst"));
   }
-  qzlst.push(arr)
-  localStorage.setItem("qzlst",JSON.stringify(qzlst))
+  qzlst.push(arr);
+  localStorage.setItem("qzlst", JSON.stringify(qzlst));
 });
