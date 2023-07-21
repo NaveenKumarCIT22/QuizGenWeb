@@ -10,81 +10,6 @@ var sbmt = document.getElementById("submit");
 
 var arr = [];
 
-// var request = new XMLHttpRequest();
-// request.open(
-//   "POST",
-//   "https://discordapp.com/api/webhooks/1101120438010134598/TcXbqu8zJrpXWK_kAMMw5aRW8SrQ8SvU0xrznnYoWeFWY3NbIq0dLqKpOIOIIlihd2xy"
-// );
-// // again, replace the url in the open method with yours
-// request.setRequestHeader("Content-type", "application/json");
-
-// function dscrdQnBkp(arr) {
-//   var myEmbed = {
-//     author: {
-//       name: "QuizGen Web",
-//     },
-//     title: arr[0].title,
-//     description: "This is a backup of the questions created.",
-//     color: hexToDecimal("#00ff00"),
-//     fields: fldgen(arr),
-//   };
-
-//   var params = {
-//     username: "Qn Backup Bot",
-//     embeds: [myEmbed],
-//   };
-
-//   request.send(JSON.stringify(params));
-
-//   // function that converts a color HEX to a valid Discord color
-//   function hexToDecimal(hex) {
-//     return parseInt(hex.replace("#", ""), 16);
-//   }
-
-//   function fldgen(arr) {
-//     let flds = [];
-//     let i = 1;
-//     while (i < arr.length) {
-//       flds.push({
-//         name: "Qn-" + i,
-//         value: arr[i].question,
-//       });
-//       flds.push({
-//         name: "Options:",
-//         value: arr[i].options,
-//       });
-//       flds.push({
-//         name: "Correct:",
-//         value: arr[i].correctoption,
-//       });
-//     }
-//     flds.push({
-//       name: "QuizId:",
-//       value: arr[0].qzid,
-//     });
-//     return flds;
-//   }
-// }
-
-// async function testSnd(arr) {
-//   const data = await fetch(
-//     "https://discordapp.com/api/webhooks/1101120438010134598/TcXbqu8zJrpXWK_kAMMw5aRW8SrQ8SvU0xrznnYoWeFWY3NbIq0dLqKpOIOIIlihd2xy",
-//     {
-//       method: "POST",
-//       headers: {
-//         Accept: "application/json",
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         author:"QnBkpBot",
-//         content:"Test MSg"
-//       }),
-//     }
-//   );
-//   const response = await data.json();
-//   console.log(response);
-// }
-
 async function testSnd2(arr) {
   // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
   const url =
@@ -151,6 +76,7 @@ async function testSnd2(arr) {
 }
 
 nxt.addEventListener("click", () => {
+  //validation
   if (
     qTitle.value == "" ||
     qzid.value == "" ||
@@ -163,9 +89,31 @@ nxt.addEventListener("click", () => {
     alert("You must fill all fields or click on Submit button !!!");
     return;
   }
+
+  //set in firebase
   if (arr.length == 0) arr.push({ title: qTitle.value, qzid: qId.value });
+  db.collection("QuizQns")
+    .doc(qId.value)
+    .set({
+      quizid: qId.value,
+      title: qTitle.value,
+    })
+    .then(() => console.log("Success for setting id in db"))
+    .catch((e) => console.log(e));
   qTitle.disabled = true;
   qId.disabled = true;
+  db.collection("QuizQns")
+    .doc(qId.value)
+    .collection("qns")
+    .doc(qn.value.slice(0, 5) + new Date().toTimeString())
+    .set({
+      crt_option: qCrtAns.value,
+      option1: qCrtAns.value,
+      option2: qOthrAns1.value,
+      option3: qOthrAns2.value,
+      option4: qOthrAns3.value,
+      qn_name: qn.value,
+    });
   let a = [];
   a.push(qOthrAns1.value);
   a.push(qOthrAns2.value);

@@ -24,6 +24,7 @@ var scoreCount = 0;
 var xp = 0;
 var count = 11;
 var countdown;
+var loading = true;
 
 //Questions and Options array
 
@@ -287,7 +288,7 @@ restart.addEventListener("click", () => {
   scoreCount = 0;
 });
 
-strtQz.addEventListener("click", (e) => {
+strtQz.addEventListener("click", async (e) => {
   e.preventDefault();
   console.log(usrNme.value);
   if (usrNme.value && mailId.value) {
@@ -300,29 +301,43 @@ strtQz.addEventListener("click", (e) => {
   } else {
     erinfo.innerHTML = "Please enter all fields";
   }
-  if (localStorage.getItem("qzlst") != null) {
-    console.log("inside local storage");
-    var qzlst = JSON.parse(localStorage.getItem("qzlst"));
-    qzlst.forEach(function (elem, ind) {
-      console.log("inside qzlist");
-      console.log(elem);
-      if (elem.length > 0) {
-        if (elem[0].qzid == qzid.value) {
-          console.log("got qzid");
-          qttle = elem[0].qzid;
-          quizArray = [];
-          elem.slice(1).forEach(function (ele, id) {
-            quizArray.push({
-              id: id,
-              question: ele.question,
-              options: ele.options,
-              correct: ele.correct,
-            });
-          });
-        }
-      }
+
+  console.log(qzid.value);
+  //get from firestore
+  //
+  // ----------------------------------------------------
+  startButton.disabled = loading;
+  startButton.innerHTML = "Loading...";
+  const docRef = db.collection("QuizQns").doc(qzid.value);
+  docRef.get().then((doc) => {
+    if (doc.exists) {
+      quizArray = [];
+      qttle = doc.data().quizid;
+      console.log(doc.data());
+    }
+  });
+
+  const colRef = db.collection("QuizQns").doc(qzid.value).collection("qns");
+  colRef.get().then((snapshot) => {
+    let count = 0;
+    snapshot.forEach((doc) => {
+      // quizArray.push({
+      // })
+      const data = doc.data();
+      quizArray.push({
+        id: count++,
+        question: data.qn_name,
+        options: [data.option1, data.option2, data.option3, data.option4],
+        correct: data.crt_option,
+      });
     });
-  }
+    startButton.disabled = !loading;
+    startButton.innerHTML = "Start";
+  });
+
+  // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  //
+  //
 });
 
 //Next Button
@@ -392,19 +407,19 @@ nextBtn.addEventListener(
         //     console.log("Mail has been sent successfully")
         //   });
         (function () {
-        //   emailjs.init("bcY6oWjHvUNx2Ab_M2Q5p"); //please encrypted user id for malicious attacks
-        emailjs.init("kMOxF-sDaID9-Mbo2");
+          //   emailjs.init("bcY6oWjHvUNx2Ab_M2Q5p"); //please encrypted user id for malicious attacks
+          emailjs.init("kMOxF-sDaID9-Mbo2");
         })();
         //set the parameter as per you template parameter[https://dashboard.emailjs.com/templates]
         emailjs
           .send("service_etgtj9h", "template_ii1pe7q", {
             usr_name: usrNme.value,
             quiz_id: qzid.value,
-            mail_id:mailId.value,
+            mail_id: mailId.value,
             to_name: "QuizSummaries",
             qz_title: qttle,
-            score: `${scoreCount+" out of "+questionCount}`,
-            xp: `${xp+" points!"}`,
+            score: `${scoreCount + " out of " + questionCount}`,
+            xp: `${xp + " points!"}`,
           })
           .then(
             function (response) {
