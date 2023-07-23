@@ -7,8 +7,17 @@ var qOthrAns2 = document.getElementById("oans2");
 var qOthrAns3 = document.getElementById("oans3");
 var nxt = document.getElementById("next-button");
 var sbmt = document.getElementById("submit");
+var crte = document.getElementById("crte");
+var auths = document.getElementById("auths");
+var authcode = document.getElementById("authcode");
+var authForm = document.querySelector("#authForm");
 
 var arr = [];
+
+// document.onload(() => {
+crte.hidden = true;
+auths.hidden = false;
+// });
 
 async function testSnd2(arr) {
   // var url = "https://discordapp.com/api/webhooks/1102837202372808765/r1LE4rEFF-U9fFTg11f78rLnZTOhLIaJh-MaM6m0ySV2yKACUi5nZ-DpAFuaWQdhBVwt";
@@ -149,3 +158,28 @@ sbmt.addEventListener("click", () => {
   qzlst.push(arr);
   localStorage.setItem("qzlst", JSON.stringify(qzlst));
 });
+
+authForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  // console.log("in....");
+  var vals = authcode.value;
+  let cmp = 0;
+  for (let i = 0; i < 15; i++) {
+    cmp += i * i + 1;
+    i++;
+  }
+  cmp = cmp * cmp - 1;
+  cmp %= 17;
+  // console.log("cmp:" + cmp);
+  let val = 0;
+  for (let s of vals) {
+    val += parseInt(s);
+  }
+  // console.log("val:" + val);
+  if (cmp / val == 2) {
+    crte.hidden = false;
+    auths.hidden = true;
+  }
+});
+
+// function authorize(e) {}
