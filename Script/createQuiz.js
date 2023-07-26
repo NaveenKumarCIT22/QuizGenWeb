@@ -183,4 +183,4 @@ authForm.addEventListener("submit", (e) => {
 });
 
 // function authorize(e) {}
-qn.addEventListener("blur",(e)=>{e.target.value = e.target.value.replace("\n","<br />");})
+qn.addEventListener("blur",(e)=>{e.target.value = e.target.value.replaceAll("\n","<br />");})
