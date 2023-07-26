@@ -22,7 +22,7 @@ var erinfo = document.getElementById("erinfo");
 var questionCount;
 var scoreCount = 0;
 var xp = 0;
-var count = 11;
+var count = 26;
 var countdown;
 var loading = true;
 
